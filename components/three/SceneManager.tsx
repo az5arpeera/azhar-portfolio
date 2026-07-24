@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { Canvas } from "@react-three/fiber";
 import { usePrefsStore } from "@/lib/store/usePrefsStore";
 import { detectTier, type Tier } from "@/lib/gpu-tier";
+import { OceanBackdrop } from "./OceanBackdrop";
 
 const OceanScene = dynamic(
   () => import("./OceanScene").then((m) => m.OceanScene),
@@ -24,31 +25,27 @@ export function SceneManager() {
   }, [animOn]);
 
   if (tier === "static") {
-    // Still frame: the CSS ocean gradient shows through the transparent hero
-    // and contact sections in place of the live scene.
-    return (
-      <div
-        aria-hidden
-        data-testid="ocean-static"
-        className="pointer-events-none fixed inset-0 -z-10"
-        style={{ background: "var(--ocean-gradient)" }}
-      />
-    );
+    // Motion off / no-GPU: the morphing gradient carries the whole look on its
+    // own, as a correct still frame of wherever the scroll currently is.
+    return <OceanBackdrop testId="ocean-static" />;
   }
 
   return (
-    <div
-      aria-hidden
-      className="pointer-events-none fixed inset-0 -z-10"
-      data-testid="ocean-canvas"
-    >
-      <Canvas
-        camera={{ position: [0, 0, 9], fov: 60 }}
-        dpr={tier === "full" ? [1, 2] : 1}
-        gl={{ antialias: tier === "full", powerPreference: "high-performance" }}
+    <>
+      <OceanBackdrop testId="ocean-backdrop" />
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 -z-10"
+        data-testid="ocean-canvas"
       >
-        <OceanScene tier={tier} />
-      </Canvas>
-    </div>
+        <Canvas
+          camera={{ position: [0, 0, 9], fov: 60 }}
+          dpr={tier === "full" ? [1, 1.75] : 1}
+          gl={{ antialias: tier === "full", powerPreference: "high-performance" }}
+        >
+          <OceanScene tier={tier} />
+        </Canvas>
+      </div>
+    </>
   );
 }

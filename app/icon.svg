@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" rx="22" fill="#0b1622"/>
+  <!-- Impossible (Escher/Penrose) tri-bar: three shaded faces forming a
+       triangular frame that reads as a dimensional, impossible object -->
+  <g stroke="#0b1622" stroke-width="1.4" stroke-linejoin="round">
+    <polygon points="17,74 83,74 61,60 39,60" fill="#8a6626"/>
+    <polygon points="83,74 50,17 50,41 61,60" fill="#c79a43"/>
+    <polygon points="17,74 50,17 50,41 39,60" fill="#ecce7c"/>
+  </g>
+</svg>

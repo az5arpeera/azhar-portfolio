@@ -14,7 +14,10 @@ export function Resume({
     <section
       id="resume"
       className="relative min-h-[92vh] px-6 py-[100px]"
-      style={{ background: "rgba(5,11,20,0.66)" }}
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(5,11,20,0) 0%, rgba(5,11,20,0.52) 24%, rgba(5,11,20,0.52) 78%, rgba(5,11,20,0) 100%)",
+      }}
     >
       <div className="mx-auto max-w-[760px]">
         <div className="mb-10 flex flex-wrap items-baseline justify-between gap-4">

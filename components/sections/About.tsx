@@ -8,7 +8,7 @@ export function About({ copy }: { copy: SiteSettings["about"] }) {
       className="relative flex min-h-[92vh] items-center justify-center px-6 py-[100px]"
       style={{
         background:
-          "linear-gradient(180deg, rgba(5,11,20,0.25), rgba(5,11,20,0.68))",
+          "linear-gradient(180deg, rgba(5,11,20,0) 0%, rgba(5,11,20,0.5) 26%, rgba(5,11,20,0.5) 80%, rgba(5,11,20,0) 100%)",
       }}
     >
       <div className="grid max-w-[900px] items-center gap-14 md:grid-cols-[1fr_1.3fr]">

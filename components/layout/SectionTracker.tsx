@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { usePrefsStore } from "@/lib/store/usePrefsStore";
 import { useScrollStore, type SectionId } from "@/lib/store/useScrollStore";
 import { track } from "@/lib/analytics";
@@ -9,6 +10,7 @@ import { track } from "@/lib/analytics";
    of the motion setting — the 3D scene, analytics, and later the audio
    crossfade all read active section from here. */
 export function SectionTracker() {
+  const pathname = usePathname();
   const setActiveSection = useScrollStore((s) => s.setActiveSection);
   const setProgress = useScrollStore((s) => s.setProgress);
   const setSectionFloat = useScrollStore((s) => s.setSectionFloat);
@@ -23,11 +25,15 @@ export function SectionTracker() {
     [],
   );
 
+  // One page view per route navigation.
   useEffect(() => {
     track({ event_type: "page_view" }, consentRef.current);
-  }, []);
+  }, [pathname]);
 
+  // Re-observe on every route change: each page renders its own sections, so the
+  // observer must be rebuilt against the new DOM after client-side navigation.
   useEffect(() => {
+    seen.current = new Set<string>();
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -45,7 +51,7 @@ export function SectionTracker() {
 
     document.querySelectorAll("section[id]").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [setActiveSection]);
+  }, [setActiveSection, pathname]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -85,7 +91,7 @@ export function SectionTracker() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [setProgress, setSectionFloat]);
+  }, [setProgress, setSectionFloat, pathname]);
 
   return null;
 }

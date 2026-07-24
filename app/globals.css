@@ -170,16 +170,155 @@ html {
   transition: background 0.4s;
 }
 
+/* Transparent so the fixed ocean canvas/backdrop (negative z-index) is visible.
+   A non-transparent body paints *over* negative-z-index fixed layers — the base
+   page colour lives on <html> instead, behind the scene. */
 body {
-  background: var(--page-bg);
+  background: transparent;
   color: var(--text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: oklch(0.7 0.12 200);
-  color: #04101c;
+  background: oklch(0.82 0.13 78); /* warm gold — ties to the ventures accent */
+  color: #100a02;
+}
+
+/* Lifts text off the busy animated field without a hard box behind it. */
+.text-legible {
+  text-shadow:
+    0 1px 2px rgba(2, 6, 12, 0.6),
+    0 2px 22px rgba(2, 6, 12, 0.45);
+}
+
+/* ── Cross-page transition (app/template.tsx) ── */
+@keyframes routeEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.route-enter {
+  animation: routeEnter 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* ── Signature draw-on (home) ── */
+.signature-ink {
+  font-size: clamp(46px, 8vw, 96px);
+  line-height: 1;
+  color: var(--ocean-text);
+  clip-path: inset(0 100% 0 0);
+  text-shadow: 0 2px 30px rgba(2, 6, 12, 0.5);
+}
+.signature-ink.is-drawn {
+  animation: sigReveal 2.2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+@keyframes sigReveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.signature-rule {
+  height: 1px;
+  width: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--ocean-accent),
+    transparent
+  );
+  transition: width 1.6s ease 0.6s;
+}
+.signature-rule.is-drawn {
+  width: min(320px, 60vw);
+}
+
+/* ── Notes expand / collapse (animatable height via grid) ── */
+.note-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s ease;
+}
+.note-reveal[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.note-reveal-inner {
+  overflow: hidden;
+}
+.prose-note {
+  color: var(--text-dim);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.prose-note p {
+  margin-bottom: 0.9em;
+}
+.prose-note a {
+  color: var(--ocean-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-note img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin: 1.2em 0;
+}
+.prose-note h2,
+.prose-note h3 {
+  color: var(--text);
+  font-family: var(--font-display);
+  margin: 1em 0 0.4em;
+}
+.prose-note ul {
+  list-style: disc;
+  padding-left: 1.2em;
+  margin-bottom: 0.9em;
+}
+.prose-note code {
+  background: var(--card-bg);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* ── Faint technical-drawing crosshair guides ── */
+.crosshair-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--border) 0 2px,
+    transparent 2px 9px
+  );
+}
+.crosshair-plus::before,
+.crosshair-plus::after {
+  content: "";
+  position: absolute;
+  background: var(--ocean-accent);
+  opacity: 0.5;
+}
+.crosshair-plus::before {
+  left: -5px;
+  top: 0;
+  width: 11px;
+  height: 1px;
+}
+.crosshair-plus::after {
+  left: 0;
+  top: -5px;
+  width: 1px;
+  height: 11px;
 }
 
 /* Single global kill-switch every animation in the app must obey. Set from the
@@ -191,4 +330,12 @@ body {
   animation: none !important;
   transition: none !important;
   scroll-behavior: auto !important;
+}
+
+/* Motion-off must still show the finished states, not the pre-animation ones. */
+[data-motion="off"] .signature-ink {
+  clip-path: none !important;
+}
+[data-motion="off"] .signature-rule {
+  width: min(320px, 60vw);
 }

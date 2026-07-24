@@ -12,7 +12,10 @@ export function FutureVentures({
     <section
       id="ventures"
       className="relative min-h-screen px-6 py-[100px]"
-      style={{ background: "rgba(8,7,5,0.32)" }}
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(10,7,4,0) 0%, rgba(10,7,4,0.42) 26%, rgba(10,7,4,0.42) 80%, rgba(10,7,4,0) 100%)",
+      }}
     >
       <div className="relative z-2 mx-auto max-w-[1100px]">
         <div className="mb-14 text-center">

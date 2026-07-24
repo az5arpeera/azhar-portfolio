@@ -17,36 +17,36 @@ export type OceanTheme = {
 
 export const THEMES = {
   ocean: {
-    colorTop: [0.55, 0.92, 0.98],
-    colorBottom: [0.03, 0.12, 0.28],
+    colorTop: [0.6, 0.95, 1.0],
+    colorBottom: [0.06, 0.34, 0.55],
     flow: 0,
     speed: 1,
     spread: 1,
-    accent: 1,
+    accent: 1.1,
   },
   calm: {
-    colorTop: [0.35, 0.68, 0.82],
-    colorBottom: [0.02, 0.08, 0.2],
+    colorTop: [0.42, 0.74, 0.9],
+    colorBottom: [0.04, 0.24, 0.42],
     flow: 0,
     speed: 0.55,
     spread: 0.9,
-    accent: 0.8,
+    accent: 0.95,
   },
   deep: {
-    colorTop: [0.22, 0.5, 0.7],
-    colorBottom: [0.02, 0.05, 0.14],
+    colorTop: [0.3, 0.58, 0.82],
+    colorBottom: [0.03, 0.16, 0.34],
     flow: 0,
     speed: 0.45,
     spread: 0.8,
-    accent: 0.7,
+    accent: 0.85,
   },
   racetrack: {
-    colorTop: [0.99, 0.78, 0.36],
-    colorBottom: [0.12, 0.07, 0.05],
+    colorTop: [1.0, 0.82, 0.42],
+    colorBottom: [0.4, 0.16, 0.06],
     flow: 1,
     speed: 1.7,
     spread: 1.15,
-    accent: 1.25,
+    accent: 1.3,
   },
   // Venture-page moods (used in Phase 9).
   panels: {
