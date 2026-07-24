@@ -35,7 +35,9 @@ export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const cookieStore = await cookies();
-  const prefs = parsePrefsCookie(cookieStore.get(PREFS_COOKIE)?.value);
+  const prefsCookie = cookieStore.get(PREFS_COOKIE)?.value;
+  const prefs = parsePrefsCookie(prefsCookie);
+  const hadCookie = prefsCookie !== undefined;
 
   return (
     <html
@@ -49,7 +51,7 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: motionDefaultScript }} />
       </head>
       <body className="min-h-full">
-        <Providers initialPrefs={prefs}>
+        <Providers initialPrefs={prefs} hadCookie={hadCookie}>
           <ControlWidget />
           <SectionTracker />
           {children}

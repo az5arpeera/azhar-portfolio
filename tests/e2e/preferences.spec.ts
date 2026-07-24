@@ -6,8 +6,13 @@ test.describe("theme toggle", () => {
     const html = page.locator("html");
     await expect(html).toHaveAttribute("data-theme", "dark");
 
+    // Wait for the persistence POST so the cookie is written before reloading.
+    const saved = page.waitForResponse(
+      (r) => r.url().includes("/api/prefs") && r.request().method() === "POST",
+    );
     await page.getByTestId("theme-toggle").click();
     await expect(html).toHaveAttribute("data-theme", "light");
+    await saved;
 
     await page.reload();
     await expect(html).toHaveAttribute("data-theme", "light");

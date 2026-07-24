@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
-import { isAdmin } from "@/lib/auth";
+import { auth, isAdmin } from "@/lib/auth";
 
 export default auth((req) => {
   if (!isAdmin(req.auth?.user?.email)) {
-    return NextResponse.redirect(new URL("/", req.url));
+    // Clone req.nextUrl so the redirect keeps the real request origin rather
+    // than defaulting to the configured auth URL.
+    const url = req.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
   }
 });
 

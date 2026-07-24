@@ -7,9 +7,11 @@ import type { Prefs } from "@/lib/prefs";
 
 export function Providers({
   initialPrefs,
+  hadCookie,
   children,
 }: {
   initialPrefs: Prefs;
+  hadCookie: boolean;
   children: React.ReactNode;
 }) {
   const theme = usePrefsStore((s) => s.theme);
@@ -20,9 +22,22 @@ export function Providers({
   useState(() => usePrefsStore.setState(initialPrefs));
 
   useEffect(() => {
+    let effectiveAnimOn = animOn;
+
+    // With no saved cookie, the OS reduced-motion setting is the source of
+    // truth — matched by the pre-hydration script for the first paint and
+    // reconciled into the store here so this effect doesn't clobber it.
+    if (
+      !hadCookie &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      effectiveAnimOn = false;
+      if (animOn) usePrefsStore.setState({ animOn: false });
+    }
+
     document.documentElement.dataset.theme = theme;
-    document.documentElement.dataset.motion = animOn ? "on" : "off";
-  }, [theme, animOn]);
+    document.documentElement.dataset.motion = effectiveAnimOn ? "on" : "off";
+  }, [theme, animOn, hadCookie]);
 
   return <SessionProvider>{children}</SessionProvider>;
 }
