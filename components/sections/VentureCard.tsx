@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Venture } from "@/lib/content";
+import type { Venture } from "@/lib/queries";
 
 export function VentureCard({ venture }: { venture: Venture }) {
   return (

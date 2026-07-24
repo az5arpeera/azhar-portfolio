@@ -1,12 +1,14 @@
 import { Download } from "lucide-react";
-import { siteCopy, type ResumeItem } from "@/lib/content";
+import type { ResumeItem } from "@/lib/queries";
 
 export function Resume({
   items,
+  headline,
   pdfUrl,
 }: {
   items: ResumeItem[];
-  pdfUrl?: string;
+  headline: string;
+  pdfUrl: string | null;
 }) {
   return (
     <section
@@ -27,25 +29,27 @@ export function Resume({
               className="font-display text-[34px] font-normal"
               style={{ color: "var(--text)" }}
             >
-              {siteCopy.resumeHeadline}
+              {headline}
             </h2>
           </div>
-          <a
-            href={pdfUrl ?? "#"}
-            data-testid="resume-download"
-            className="flex items-center gap-2 rounded-full border px-[18px] py-2.5 text-[13px] font-medium no-underline"
-            style={{
-              background: "var(--card-bg)",
-              borderColor: "var(--border)",
-              color: "var(--text)",
-            }}
-          >
-            <Download size={14} /> Download PDF
-          </a>
+          {pdfUrl && (
+            <a
+              href={pdfUrl}
+              data-testid="resume-download"
+              className="flex items-center gap-2 rounded-full border px-[18px] py-2.5 text-[13px] font-medium no-underline"
+              style={{
+                background: "var(--card-bg)",
+                borderColor: "var(--border)",
+                color: "var(--text)",
+              }}
+            >
+              <Download size={14} /> Download PDF
+            </a>
+          )}
         </div>
         {items.map((item) => (
           <div
-            key={`${item.period}-${item.role}`}
+            key={item.id}
             data-testid="resume-item"
             className="grid grid-cols-1 gap-5 border-t py-5 sm:grid-cols-[140px_1fr]"
             style={{ borderColor: "var(--border)" }}
@@ -59,6 +63,9 @@ export function Resume({
                 style={{ color: "var(--text)" }}
               >
                 {item.role}
+                {item.org && (
+                  <span style={{ color: "var(--text-dim)" }}>, {item.org}</span>
+                )}
               </div>
               <div
                 className="text-sm leading-[1.6]"

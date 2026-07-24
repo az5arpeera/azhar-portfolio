@@ -1,4 +1,6 @@
-export function Certifications({ items }: { items: string[] }) {
+import type { Certification } from "@/lib/queries";
+
+export function Certifications({ items }: { items: Certification[] }) {
   return (
     <section
       id="certifications"
@@ -15,16 +17,28 @@ export function Certifications({ items }: { items: string[] }) {
         <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
           {items.map((item) => (
             <div
-              key={item}
+              key={item.id}
               data-testid="certification"
-              className="rounded-card-sm border p-5 text-[15px] font-medium"
+              className="rounded-card-sm border p-5"
               style={{
                 background: "var(--card-bg)",
                 borderColor: "var(--border)",
-                color: "var(--text)",
               }}
             >
-              {item}
+              <div
+                className="text-[15px] font-medium"
+                style={{ color: "var(--text)" }}
+              >
+                {item.name}
+              </div>
+              {item.issuer && (
+                <div
+                  className="mt-1 text-[13px]"
+                  style={{ color: "var(--text-dim)" }}
+                >
+                  {item.issuer}
+                </div>
+              )}
             </div>
           ))}
         </div>

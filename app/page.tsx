@@ -7,25 +7,56 @@ import { Certifications } from "@/components/sections/Certifications";
 import { InterestsMedia } from "@/components/sections/InterestsMedia";
 import { SocialsContact } from "@/components/sections/SocialsContact";
 import {
-  ventures,
-  notes,
-  resumeItems,
-  certifications,
-  mediaItems,
-  socials,
-} from "@/lib/content";
+  getVentures,
+  getPosts,
+  getResumeItems,
+  getCertifications,
+  getMediaItems,
+  getSocials,
+  getSiteSettings,
+} from "@/lib/queries";
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  const [
+    settings,
+    ventures,
+    posts,
+    resumeItems,
+    certifications,
+    mediaItems,
+    socials,
+  ] = await Promise.all([
+    getSiteSettings(),
+    getVentures(),
+    getPosts(),
+    getResumeItems(),
+    getCertifications(),
+    getMediaItems(),
+    getSocials(),
+  ]);
+
   return (
     <main>
-      <Hero />
-      <About />
-      <FutureVentures ventures={ventures} />
-      <Blog notes={notes} />
-      <Resume items={resumeItems} />
+      <Hero copy={settings.hero} />
+      <About copy={settings.about} />
+      <FutureVentures
+        ventures={ventures}
+        headline={settings.sections.venturesHeadline}
+      />
+      <Blog posts={posts} headline={settings.sections.notesHeadline} />
+      <Resume
+        items={resumeItems}
+        headline={settings.sections.resumeHeadline}
+        pdfUrl={settings.resume.pdfUrl}
+      />
       <Certifications items={certifications} />
       <InterestsMedia items={mediaItems} />
-      <SocialsContact socials={socials} />
+      <SocialsContact
+        socials={socials}
+        headline={settings.sections.contactHeadline}
+      />
     </main>
   );
 }

@@ -1,4 +1,4 @@
-import type { MediaItem } from "@/lib/content";
+import type { MediaItem } from "@/lib/queries";
 
 export function InterestsMedia({ items }: { items: MediaItem[] }) {
   const books = items.filter((i) => i.category === "book");
@@ -20,7 +20,7 @@ export function InterestsMedia({ items }: { items: MediaItem[] }) {
           </div>
           {books.map((book) => (
             <div
-              key={book.title}
+              key={book.id}
               data-testid="book"
               className="border-t py-2.5 font-display text-base"
               style={{ borderColor: "var(--border)", color: "var(--text)" }}
@@ -44,7 +44,7 @@ export function InterestsMedia({ items }: { items: MediaItem[] }) {
           </div>
           {music.map((item) => (
             <p
-              key={item.title}
+              key={item.id}
               className="text-[15px] leading-[1.7]"
               style={{ color: "var(--text-dim)" }}
             >

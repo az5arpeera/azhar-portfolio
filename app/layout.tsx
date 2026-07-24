@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import { Newsreader, Inter } from "next/font/google";
 import { Providers } from "@/components/layout/Providers";
 import { ControlWidget } from "@/components/layout/ControlWidget";
+import { ConsentNudge } from "@/components/layout/ConsentNudge";
+import { SectionTracker } from "@/components/layout/SectionTracker";
 import { PREFS_COOKIE, parsePrefsCookie } from "@/lib/prefs";
 import "./globals.css";
 
@@ -49,7 +51,9 @@ export default async function RootLayout({
       <body className="min-h-full">
         <Providers initialPrefs={prefs}>
           <ControlWidget />
+          <SectionTracker />
           {children}
+          <ConsentNudge />
         </Providers>
       </body>
     </html>

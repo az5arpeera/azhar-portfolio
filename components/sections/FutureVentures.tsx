@@ -1,7 +1,13 @@
-import { siteCopy, type Venture } from "@/lib/content";
+import type { Venture } from "@/lib/queries";
 import { VentureCard } from "./VentureCard";
 
-export function FutureVentures({ ventures }: { ventures: Venture[] }) {
+export function FutureVentures({
+  ventures,
+  headline,
+}: {
+  ventures: Venture[];
+  headline: string;
+}) {
   return (
     <section
       id="ventures"
@@ -30,7 +36,7 @@ export function FutureVentures({ ventures }: { ventures: Venture[] }) {
             className="font-display text-[34px] font-normal"
             style={{ color: "var(--ventures-text)" }}
           >
-            {siteCopy.venturesHeadline}
+            {headline}
           </h2>
         </div>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-[22px]">

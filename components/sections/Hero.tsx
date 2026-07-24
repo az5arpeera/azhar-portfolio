@@ -1,4 +1,4 @@
-import { siteCopy } from "@/lib/content";
+import type { SiteSettings } from "@/lib/queries";
 
 const waveLayers = [
   { top: "55%", height: "60%", opacity: 0.5, duration: "22s" },
@@ -6,7 +6,7 @@ const waveLayers = [
   { top: "75%", height: "50%", opacity: 0.5, duration: "18s" },
 ];
 
-export function Hero() {
+export function Hero({ copy }: { copy: SiteSettings["hero"] }) {
   return (
     <section
       id="hero"
@@ -35,19 +35,19 @@ export function Hero() {
           className="mb-[22px] text-xs font-medium tracking-[0.25em] uppercase"
           style={{ color: "var(--ocean-accent)" }}
         >
-          {siteCopy.heroEyebrow}
+          {copy.eyebrow}
         </div>
         <h1
           className="mb-5 font-display text-[clamp(38px,6vw,68px)] leading-[1.08] font-normal"
           style={{ color: "var(--ocean-text)" }}
         >
-          {siteCopy.heroHeadline}
+          {copy.headline}
         </h1>
         <p
           className="mx-auto max-w-[520px] text-base leading-relaxed"
           style={{ color: "var(--ocean-text-dim)" }}
         >
-          {siteCopy.heroSub}
+          {copy.sub}
         </p>
       </div>
 

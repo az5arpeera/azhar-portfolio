@@ -1,6 +1,18 @@
-import { siteCopy, type Note } from "@/lib/content";
+import type { Post } from "@/lib/queries";
 
-export function Blog({ notes }: { notes: Note[] }) {
+const dateFormat = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+export function Blog({
+  posts,
+  headline,
+}: {
+  posts: Post[];
+  headline: string;
+}) {
   return (
     <section
       id="notes"
@@ -18,29 +30,31 @@ export function Blog({ notes }: { notes: Note[] }) {
           className="mb-10 font-display text-[34px] font-normal"
           style={{ color: "var(--text)" }}
         >
-          {siteCopy.notesHeadline}
+          {headline}
         </h2>
-        {notes.map((note) => (
+        {posts.map((post) => (
           <article
-            key={note.slug}
+            key={post.slug}
             data-testid="note"
             className="border-t py-[26px]"
             style={{ borderColor: "var(--border)" }}
           >
-            <div className="mb-2 text-xs" style={{ color: "var(--text-dim)" }}>
-              {note.date}
-            </div>
+            {post.published_at && (
+              <div className="mb-2 text-xs" style={{ color: "var(--text-dim)" }}>
+                {dateFormat.format(new Date(post.published_at))}
+              </div>
+            )}
             <h3
               className="mb-2.5 font-display text-[22px] font-normal"
               style={{ color: "var(--text)" }}
             >
-              {note.title}
+              {post.title}
             </h3>
             <p
               className="text-[15px] leading-[1.7]"
               style={{ color: "var(--text-dim)" }}
             >
-              {note.excerpt}
+              {post.excerpt}
             </p>
           </article>
         ))}

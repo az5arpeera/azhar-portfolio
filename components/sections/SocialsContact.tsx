@@ -1,7 +1,13 @@
-import { siteCopy, type Social } from "@/lib/content";
+import type { Social } from "@/lib/queries";
 import { ContactForm } from "./ContactForm";
 
-export function SocialsContact({ socials }: { socials: Social[] }) {
+export function SocialsContact({
+  socials,
+  headline,
+}: {
+  socials: Social[];
+  headline: string;
+}) {
   return (
     <section
       id="contact"
@@ -18,7 +24,7 @@ export function SocialsContact({ socials }: { socials: Social[] }) {
         className="mb-10 max-w-[560px] font-display text-[34px] font-normal"
         style={{ color: "var(--ocean-text)" }}
       >
-        {siteCopy.contactHeadline}
+        {headline}
       </h2>
 
       <ContactForm />
@@ -26,7 +32,7 @@ export function SocialsContact({ socials }: { socials: Social[] }) {
       <div className="flex gap-7">
         {socials.map((social) => (
           <a
-            key={social.platform}
+            key={social.id}
             href={social.url}
             target="_blank"
             rel="noopener noreferrer"

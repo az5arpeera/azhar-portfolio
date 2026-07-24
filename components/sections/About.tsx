@@ -1,6 +1,7 @@
-import { siteCopy } from "@/lib/content";
+import Image from "next/image";
+import type { SiteSettings } from "@/lib/queries";
 
-export function About() {
+export function About({ copy }: { copy: SiteSettings["about"] }) {
   return (
     <section
       id="about"
@@ -9,13 +10,20 @@ export function About() {
     >
       <div className="grid max-w-[900px] items-center gap-14 md:grid-cols-[1fr_1.3fr]">
         <div
-          className="flex aspect-4/5 items-center justify-center overflow-hidden rounded-[20px] text-sm"
-          style={{
-            background: "var(--card-bg)",
-            color: "var(--text-dim)",
-          }}
+          className="relative flex aspect-4/5 items-center justify-center overflow-hidden rounded-[20px] text-sm"
+          style={{ background: "var(--card-bg)", color: "var(--text-dim)" }}
         >
-          Portrait photo
+          {copy.photoUrl ? (
+            <Image
+              src={copy.photoUrl}
+              alt="Azhar Peera"
+              fill
+              sizes="(max-width: 768px) 100vw, 340px"
+              className="object-cover"
+            />
+          ) : (
+            "Portrait photo"
+          )}
         </div>
         <div>
           <div
@@ -28,19 +36,19 @@ export function About() {
             className="mb-[18px] font-display text-[34px] leading-[1.25] font-normal"
             style={{ color: "var(--text)" }}
           >
-            {siteCopy.aboutHeadline}
+            {copy.headline}
           </h2>
           <p
             className="mb-3.5 text-base leading-[1.7]"
             style={{ color: "var(--text-dim)" }}
           >
-            {siteCopy.aboutBody1}
+            {copy.body1}
           </p>
           <p
             className="text-base leading-[1.7]"
             style={{ color: "var(--text-dim)" }}
           >
-            {siteCopy.aboutBody2}
+            {copy.body2}
           </p>
         </div>
       </div>
