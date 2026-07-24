@@ -5,7 +5,7 @@ export function Certifications({ items }: { items: Certification[] }) {
     <section
       id="certifications"
       className="min-h-[60vh] px-6 py-[90px]"
-      style={{ background: "var(--about-gradient)" }}
+      style={{ background: "rgba(5,11,20,0.64)" }}
     >
       <div className="mx-auto max-w-[900px]">
         <div

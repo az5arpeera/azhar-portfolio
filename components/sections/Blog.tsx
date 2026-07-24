@@ -17,7 +17,7 @@ export function Blog({
     <section
       id="notes"
       className="relative min-h-[92vh] px-6 py-[100px]"
-      style={{ background: "var(--notes-gradient)" }}
+      style={{ background: "rgba(5,11,20,0.66)" }}
     >
       <div className="mx-auto max-w-[720px]">
         <div

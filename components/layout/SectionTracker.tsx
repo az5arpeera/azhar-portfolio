@@ -11,6 +11,7 @@ import { track } from "@/lib/analytics";
 export function SectionTracker() {
   const setActiveSection = useScrollStore((s) => s.setActiveSection);
   const setProgress = useScrollStore((s) => s.setProgress);
+  const setSectionFloat = useScrollStore((s) => s.setSectionFloat);
   const consentRef = useRef(usePrefsStore.getState().analyticsConsent);
   const seen = useRef(new Set<string>());
 
@@ -51,11 +52,40 @@ export function SectionTracker() {
       const scrollable =
         document.documentElement.scrollHeight - window.innerHeight;
       setProgress(scrollable > 0 ? window.scrollY / scrollable : 0);
+
+      // Continuous section position from real section geometry, so the ocean
+      // morph aligns to sections despite their unequal heights. Uses the
+      // viewport centre as the reference line.
+      const sections = Array.from(
+        document.querySelectorAll<HTMLElement>("main section[id]"),
+      );
+      if (sections.length === 0) return;
+      const line = window.scrollY + window.innerHeight / 2;
+      let float = 0;
+      for (let i = 0; i < sections.length; i++) {
+        const el = sections[i];
+        const top = el.offsetTop;
+        const bottom = top + el.offsetHeight;
+        if (line < top) {
+          float = i;
+          break;
+        }
+        if (line >= top && line < bottom) {
+          float = i + (line - top) / el.offsetHeight;
+          break;
+        }
+        float = i;
+      }
+      setSectionFloat(float);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [setProgress]);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [setProgress, setSectionFloat]);
 
   return null;
 }

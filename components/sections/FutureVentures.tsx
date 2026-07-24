@@ -12,18 +12,8 @@ export function FutureVentures({
     <section
       id="ventures"
       className="relative min-h-screen px-6 py-[100px]"
-      style={{ background: "var(--ventures-gradient)" }}
+      style={{ background: "rgba(8,7,5,0.32)" }}
     >
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-15"
-        style={{
-          background:
-            "repeating-linear-gradient(100deg, transparent 0 60px, var(--ventures-accent) 60px 62px, transparent 62px 140px)",
-          backgroundSize: "200% 100%",
-          animation: "shimmer 6s linear infinite",
-        }}
-      />
       <div className="relative z-2 mx-auto max-w-[1100px]">
         <div className="mb-14 text-center">
           <div

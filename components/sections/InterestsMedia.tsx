@@ -8,7 +8,7 @@ export function InterestsMedia({ items }: { items: MediaItem[] }) {
     <section
       id="interests"
       className="min-h-[70vh] px-6 py-[90px]"
-      style={{ background: "var(--notes-gradient)" }}
+      style={{ background: "rgba(5,11,20,0.64)" }}
     >
       <div className="mx-auto grid max-w-[900px] gap-10 md:grid-cols-2">
         <div>
