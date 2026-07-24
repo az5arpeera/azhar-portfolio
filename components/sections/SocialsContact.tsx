@@ -12,7 +12,6 @@ export function SocialsContact({
     <section
       id="contact"
       className="relative flex min-h-[92vh] flex-col items-center justify-center px-6 py-[100px] text-center"
-      style={{ background: "var(--ocean-gradient)" }}
     >
       <div
         className="mb-4 text-xs font-medium tracking-[0.2em] uppercase"

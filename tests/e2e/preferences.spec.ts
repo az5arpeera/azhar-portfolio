@@ -23,14 +23,14 @@ test.describe("motion toggle", () => {
   test("halts animations when switched off", async ({ page }) => {
     await page.goto("/");
     const html = page.locator("html");
-    const wave = page.getByTestId("wave-layer").first();
+    const cue = page.getByTestId("scroll-cue");
 
     await expect(html).toHaveAttribute("data-motion", "on");
-    await expect(wave).toHaveCSS("animation-name", "drift");
+    await expect(cue).toHaveCSS("animation-name", "bob");
 
     await page.getByTestId("motion-toggle").click();
     await expect(html).toHaveAttribute("data-motion", "off");
-    await expect(wave).toHaveCSS("animation-name", "none");
+    await expect(cue).toHaveCSS("animation-name", "none");
   });
 
   test("defaults to off when the OS prefers reduced motion", async ({
