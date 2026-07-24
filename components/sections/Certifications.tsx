@@ -7,7 +7,7 @@ export function Certifications({ items }: { items: Certification[] }) {
       className="min-h-[60vh] px-6 py-[90px]"
       style={{
         background:
-          "linear-gradient(180deg, rgba(5,11,20,0) 0%, rgba(5,11,20,0.52) 24%, rgba(5,11,20,0.52) 78%, rgba(5,11,20,0) 100%)",
+          "linear-gradient(180deg, rgba(5,11,20,0) 0%, rgba(5,11,20,0.62) 24%, rgba(5,11,20,0.62) 78%, rgba(5,11,20,0) 100%)",
       }}
     >
       <div className="mx-auto max-w-[900px]">

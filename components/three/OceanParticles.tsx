@@ -79,9 +79,9 @@ const vertex = /* glsl */ `
     vec2 perp = vec2(-uMouseDir.y, uMouseDir.x);
     float along = dot(rel, uMouseDir);
     float across = dot(rel, perp);
-    // long reach along the direction of motion, tight across it → a line
-    float d = length(vec2(along * 0.4, across * 2.7));
-    float push = smoothstep(0.3, 0.0, d) * uMouseStrength;
+    // small, only-slightly-elongated disturbance: a subtle nick, not a line
+    float d = length(vec2(along * 0.85, across * 1.35));
+    float push = smoothstep(0.1, 0.0, d) * uMouseStrength;
     ndc += perp * (sign(across) * push); // part the water to either side of the cut
     clip.xy = ndc * clip.w;
     gl_Position = clip;
@@ -187,7 +187,7 @@ export function OceanParticles({ count }: { count: number }) {
     const km = Math.min(1, delta * 6);
     mouse.x += (pointerTarget.x - mouse.x) * km;
     mouse.y += (pointerTarget.y - mouse.y) * km;
-    const targetStrength = pointerTarget.active ? 0.16 : 0;
+    const targetStrength = pointerTarget.active ? 0.09 : 0;
     u.uMouseStrength.value +=
       (targetStrength - u.uMouseStrength.value) * Math.min(1, delta * 4);
     u.uAspect.value = state.size.width / Math.max(1, state.size.height);

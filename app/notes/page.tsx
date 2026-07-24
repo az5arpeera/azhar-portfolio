@@ -15,7 +15,7 @@ export default async function NotesPage() {
         className="relative min-h-screen px-6 py-[120px]"
         style={{
           background:
-            "linear-gradient(180deg, rgba(5,11,20,0) 0%, rgba(5,11,20,0.52) 18%, rgba(5,11,20,0.52) 84%, rgba(5,11,20,0) 100%)",
+            "linear-gradient(180deg, rgba(5,11,20,0) 0%, rgba(5,11,20,0.62) 18%, rgba(5,11,20,0.62) 84%, rgba(5,11,20,0) 100%)",
         }}
       >
         <div className="mx-auto max-w-[760px]">

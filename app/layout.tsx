@@ -6,6 +6,7 @@ import { ControlWidget } from "@/components/layout/ControlWidget";
 import { ConsentNudge } from "@/components/layout/ConsentNudge";
 import { SectionTracker } from "@/components/layout/SectionTracker";
 import { TopNav } from "@/components/layout/TopNav";
+import { PageArrows } from "@/components/layout/PageArrows";
 import { CrosshairGuides } from "@/components/layout/CrosshairGuides";
 import { SceneManager } from "@/components/three/SceneManager";
 import { PREFS_COOKIE, parsePrefsCookie } from "@/lib/prefs";
@@ -58,6 +59,7 @@ export default async function RootLayout({
           <SceneManager />
           <CrosshairGuides />
           <TopNav />
+          <PageArrows />
           <ControlWidget />
           <SectionTracker />
           {children}

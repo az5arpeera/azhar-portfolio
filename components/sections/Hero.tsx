@@ -35,26 +35,6 @@ export function Hero({ copy }: { copy: SiteSettings["hero"] }) {
           {copy.sub}
         </p>
       </div>
-
-      <div
-        data-testid="scroll-cue"
-        className="absolute bottom-10 left-1/2 z-2 flex -translate-x-1/2 flex-col items-center"
-        style={{ animation: "bob 2.4s ease-in-out infinite" }}
-      >
-        <div
-          className="h-11 w-px"
-          style={{
-            background:
-              "linear-gradient(to bottom, transparent, var(--ocean-accent))",
-          }}
-        />
-        <div
-          className="mt-2 text-[10px] font-medium tracking-[0.15em]"
-          style={{ color: "var(--ocean-accent)" }}
-        >
-          SCROLL
-        </div>
-      </div>
     </section>
   );
 }
